@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.atguigu.tiankuo.p2p0224.R;
+import com.atguigu.tiankuo.p2p0224.common.AppManager;
 import com.atguigu.tiankuo.p2p0224.fragment.HomeFragment;
 import com.atguigu.tiankuo.p2p0224.fragment.InvestFragment;
 import com.atguigu.tiankuo.p2p0224.fragment.MoreFragment;
@@ -48,12 +49,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+        AppManager.getInstance().addActivity(this);
         //初始化控件
         initData();
         //初始化数据
         initView();
         //事件监听
         initListener();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getInstance().removeActivity(this);
     }
 
     private void initListener() {
@@ -123,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         switchFragment(R.id.tb_home);
+
     }
 
     private void initData() {

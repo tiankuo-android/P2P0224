@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.atguigu.tiankuo.p2p0224.R;
+import com.atguigu.tiankuo.p2p0224.common.AppManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -31,6 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         ButterKnife.inject(this);
 
+        AppManager.getInstance().addActivity(this);
         initData();
         initView();
         initListener();
@@ -91,5 +93,11 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private boolean isLogin() {
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getInstance().removeActivity(this);
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.atguigu.tiankuo.p2p0224.R;
 import com.atguigu.tiankuo.p2p0224.common.AppManager;
+import com.atguigu.tiankuo.p2p0224.utils.UIUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -43,7 +44,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        tvWelcomeVersion.setText(getVersionCode());
+        tvWelcomeVersion.setText(UIUtils.stringFormat(tvWelcomeVersion.getText().toString(),getVersionCode()));
     }
     //获取版本号
     private String getVersionCode() {

@@ -27,6 +27,4 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
     }
-
-    int i = 1/0;
 }

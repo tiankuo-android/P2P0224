@@ -44,7 +44,9 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        tvWelcomeVersion.setText(UIUtils.stringFormat(tvWelcomeVersion.getText().toString(),getVersionCode()));
+        tvWelcomeVersion.setText(UIUtils.stringFormat(
+                R.string.splash_version,
+                getVersionCode()));
     }
     //获取版本号
     private String getVersionCode() {

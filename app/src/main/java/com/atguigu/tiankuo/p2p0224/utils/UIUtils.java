@@ -21,8 +21,12 @@ public class UIUtils {
         return MyApplication.getContext();
     }
 
-    public static String stringFormat(String key, String value) {
-        String versionName = String.format(key, value);
+    public static String stringFormat(int id, String value) {
+        String versionName = String.format(getString(id), value);
         return versionName;
+    }
+
+    private static String getString(int id) {
+        return getContext().getResources().getString(id);
     }
 }

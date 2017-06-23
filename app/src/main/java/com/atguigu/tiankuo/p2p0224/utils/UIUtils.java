@@ -29,4 +29,16 @@ public class UIUtils {
     private static String getString(int id) {
         return getContext().getResources().getString(id);
     }
+
+    //与屏幕分辨率相关的
+        public static int dp2px(int dp){
+                float density = getContext().getResources().getDisplayMetrics().density;
+                return (int) (density * dp + 0.5);
+        
+                    }
+    
+                public static int px2dp(int px){
+                float density = getContext().getResources().getDisplayMetrics().density;
+                return (int) (px / density + 0.5);
+            }
 }

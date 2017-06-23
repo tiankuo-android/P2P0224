@@ -1,6 +1,10 @@
 package com.atguigu.tiankuo.p2p0224.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,7 +14,9 @@ import com.atguigu.tiankuo.p2p0224.base.BaseFragment;
 import com.atguigu.tiankuo.p2p0224.bean.IndexBean;
 import com.atguigu.tiankuo.p2p0224.common.AppNetConfig;
 import com.atguigu.tiankuo.p2p0224.utils.HttpUtils;
+import com.atguigu.tiankuo.p2p0224.view.ProgressView;
 import com.squareup.picasso.Picasso;
+import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -33,11 +39,14 @@ public class HomeFragment extends BaseFragment {
     @InjectView(R.id.base_setting)
     ImageView baseSetting;
     @InjectView(R.id.banner)
-    com.youth.banner.Banner banner;
+    Banner banner;
     @InjectView(R.id.tv_home_product)
     TextView tvHomeProduct;
     @InjectView(R.id.tv_home_yearrate)
     TextView tvHomeYearrate;
+    @InjectView(R.id.proView)
+    ProgressView proView;
+
 //
 //    @Nullable
 //    @Override
@@ -102,6 +111,7 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(String content) {
                 IndexBean indexBean = JSON.parseObject(content, IndexBean.class);
                 initbanner(indexBean);
+                initProgressView(indexBean);
             }
 
             @Override
@@ -110,6 +120,11 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
+    }
+
+    private void initProgressView(IndexBean indexBean) {
+        String progress = indexBean.getProInfo().getProgress();
+        proView.setSweepAngle(Integer.parseInt(progress));
     }
 
 //    private void parseJson(String content) throws JSONException {
@@ -175,6 +190,13 @@ public class HomeFragment extends BaseFragment {
         ButterKnife.reset(this);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
 
     private class GlideImageLoader extends ImageLoader {
         @Override

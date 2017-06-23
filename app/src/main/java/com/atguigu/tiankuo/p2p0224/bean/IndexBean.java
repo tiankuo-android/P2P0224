@@ -25,7 +25,7 @@ public class IndexBean {
         this.proInfo = proInfo;
     }
 
-    public List<ImageArrBean> getImageArr(List<ImageArrBean> list) {
+    public List<ImageArrBean> getImageArr() {
         return imageArr;
     }
 

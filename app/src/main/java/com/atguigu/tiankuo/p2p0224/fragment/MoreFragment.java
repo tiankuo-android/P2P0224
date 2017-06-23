@@ -1,13 +1,6 @@
 package com.atguigu.tiankuo.p2p0224.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.atguigu.tiankuo.p2p0224.R;
+import com.atguigu.tiankuo.p2p0224.base.BaseFragment;
 
 /**
  * 作者：田阔
@@ -15,16 +8,30 @@ import com.atguigu.tiankuo.p2p0224.R;
  * Created by Administrator on 2017/6/20 0020.
  */
 
-public class MoreFragment extends Fragment {
-    @Nullable
+public class MoreFragment extends BaseFragment {
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return View.inflate(getActivity(), R.layout.fragment_more, null);
+    protected void initTitle() {
+
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void initListener() {
 
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return 0;
     }
 }

@@ -1,28 +1,17 @@
 package com.atguigu.tiankuo.p2p0224.fragment;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.atguigu.tiankuo.p2p0224.R;
+import com.atguigu.tiankuo.p2p0224.base.BaseFragment;
 import com.atguigu.tiankuo.p2p0224.bean.IndexBean;
 import com.atguigu.tiankuo.p2p0224.common.AppNetConfig;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.atguigu.tiankuo.p2p0224.utils.HttpUtils;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.loader.ImageLoader;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +25,7 @@ import butterknife.InjectView;
  * Created by Administrator on 2017/6/20 0020.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
     @InjectView(R.id.base_title)
     TextView baseTitle;
     @InjectView(R.id.base_back)
@@ -49,98 +38,125 @@ public class HomeFragment extends Fragment {
     TextView tvHomeProduct;
     @InjectView(R.id.tv_home_yearrate)
     TextView tvHomeYearrate;
+//
+//    @Nullable
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        View view = View.inflate(getActivity(), R.layout.fragment_home, null);
+//        ButterKnife.inject(this, view);
+//        return view;
+//    }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = View.inflate(getActivity(), R.layout.fragment_home, null);
-        ButterKnife.inject(this, view);
-        return view;
+    protected void initTitle() {
+
+    }
+
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        initView();
+//        initData();
+//        initListener();
+//    }
+
+    public void initView() {
+
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initView();
-        initData();
-        initListener();
-    }
-
-    private void initView() {
-
+    public int getLayoutId() {
+        return R.layout.fragment_home;
     }
 
     private List<String> list = new ArrayList<>();
 
-    private void initData() {
+    public void initData() {
         loadNet();
-        initbanner();
     }
 
     private void loadNet() {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(AppNetConfig.INDEX, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, String content) {
-                super.onSuccess(statusCode, content);
-
+//        AsyncHttpClient client = new AsyncHttpClient();
+//        client.get(AppNetConfig.INDEX, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, String content) {
+//                super.onSuccess(statusCode, content);
 //                try {
 //                    parseJson(content);
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
 //                }
-
-                //解析数据
+        //解析数据
+//                IndexBean indexBean = JSON.parseObject(content, IndexBean.class);
+//                initbanner(indexBean);
+//                Log.d("content", "onSuccess: " + indexBean.getProInfo().getName());
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable error, String content) {
+//                super.onFailure(error, content);
+//            }
+//        });
+        HttpUtils.getInstance().get(AppNetConfig.INDEX, new HttpUtils.OnHttpClientListener() {
+            @Override
+            public void onSuccess(String content) {
                 IndexBean indexBean = JSON.parseObject(content, IndexBean.class);
-                Log.d("content", "onSuccess: " + indexBean.getProInfo().getName());
+                initbanner(indexBean);
             }
 
             @Override
-            public void onFailure(Throwable error, String content) {
-                super.onFailure(error, content);
+            public void onFailure(String content) {
+
             }
         });
+
     }
 
-    private void parseJson(String content) throws JSONException {
-        //创建IndexBean对象
-        IndexBean indexBean = new IndexBean();
-        //创建一个集合
-        List<IndexBean.ImageArrBean> list = new ArrayList<>();
-        //解析最外层数据
-        JSONObject jsonObject = new JSONObject(content);
-        //获取对象中的第一个元素
-        JSONArray array = jsonObject.getJSONArray("imageArr");
-        for (int i = 0; i < array.length(); i++) {
-            //创建一个集合中的子元素
-            IndexBean.ImageArrBean imageArrBean = new IndexBean.ImageArrBean();
-            //获取子元素数组中的对象
-            JSONObject jsonObject1 = array.getJSONObject(i);
-            //解析数组中对象的元素
-            String id = jsonObject.getString("ID");
-            imageArrBean.setID(id);
+//    private void parseJson(String content) throws JSONException {
+//        //创建IndexBean对象
+//        IndexBean indexBean = new IndexBean();
+//        //创建一个集合
+//        List<IndexBean.ImageArrBean> list = new ArrayList<>();
+//        //解析最外层数据
+//        JSONObject jsonObject = new JSONObject(content);
+//        //获取对象中的第一个元素
+//        JSONArray array = jsonObject.getJSONArray("imageArr");
+//        for (int i = 0; i < array.length(); i++) {
+//            //创建一个集合中的子元素
+//            IndexBean.ImageArrBean imageArrBean = new IndexBean.ImageArrBean();
+//            //获取子元素数组中的对象
+//            JSONObject jsonObject1 = array.getJSONObject(i);
+//            //解析数组中对象的元素
+//            String id = jsonObject.getString("ID");
+//            imageArrBean.setID(id);
+//
+//            String imapaurl = jsonObject.getString("IMAPAURL");
+//            imageArrBean.setIMAPAURL(imapaurl);
+//
+//            String imaurl = jsonObject.getString("IMAURL");
+//            imageArrBean.setIMAURL(imaurl);
+//
+//            //把数组元素的对象添加到集合当中
+//            list.add(imageArrBean);
+//        }
+//        indexBean.getImageArr(list);
+//
+//        //获取第二个元素
+//        JSONObject proInfo = jsonObject.getJSONObject("proInfo");
+//        String name = proInfo.getString("name");
+//        int id = proInfo.getInt("id");
+//        Log.d("json", "parseJson: " + name);
+//
+//    }
 
-            String imapaurl = jsonObject.getString("IMAPAURL");
-            imageArrBean.setIMAPAURL(imapaurl);
+    private void initbanner(IndexBean indexBean) {
+        List<IndexBean.ImageArrBean> imageArr = indexBean.getImageArr();
 
-            String imaurl = jsonObject.getString("IMAURL");
-            imageArrBean.setIMAURL(imaurl);
-
-            //把数组元素的对象添加到集合当中
-            list.add(imageArrBean);
+        for (int i = 0; i < imageArr.size(); i++) {
+            String imaurl = imageArr.get(i).getIMAURL();
+            list.add(AppNetConfig.BASE_URL + imaurl);
         }
-        indexBean.getImageArr(list);
 
-        //获取第二个元素
-        JSONObject proInfo = jsonObject.getJSONObject("proInfo");
-        String name = proInfo.getString("name");
-        int id = proInfo.getInt("id");
-        Log.d("json", "parseJson: " + name);
-
-    }
-
-    private void initbanner() {
-        list.add(AppNetConfig.BASE_URL + "images/index02.png");
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
@@ -149,7 +165,7 @@ public class HomeFragment extends Fragment {
         banner.start();
     }
 
-    private void initListener() {
+    public void initListener() {
 
     }
 

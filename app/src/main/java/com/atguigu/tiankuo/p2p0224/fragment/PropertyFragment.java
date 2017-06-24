@@ -16,7 +16,7 @@ public class PropertyFragment extends BaseFragment {
     }
 
     @Override
-    protected void initListener() {
+    public void initListener() {
 
     }
 

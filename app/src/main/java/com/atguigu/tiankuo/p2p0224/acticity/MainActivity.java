@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.atguigu.tiankuo.p2p0224.R;
 import com.atguigu.tiankuo.p2p0224.common.AppManager;
 import com.atguigu.tiankuo.p2p0224.fragment.HomeFragment;
-import com.atguigu.tiankuo.p2p0224.fragment.InvestFragment;
+import com.atguigu.tiankuo.p2p0224.fragment.investfragment.InvestFragment;
 import com.atguigu.tiankuo.p2p0224.fragment.MoreFragment;
 import com.atguigu.tiankuo.p2p0224.fragment.PropertyFragment;
 

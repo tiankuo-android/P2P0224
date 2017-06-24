@@ -2,6 +2,7 @@ package com.atguigu.tiankuo.p2p0224.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,7 +11,10 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.atguigu.tiankuo.p2p0224.R;
 import com.atguigu.tiankuo.p2p0224.utils.UIUtils;
+
+import static android.R.attr.strokeWidth;
 
 /**
  * 作者：田阔
@@ -19,28 +23,42 @@ import com.atguigu.tiankuo.p2p0224.utils.UIUtils;
  */
 
 public class ProgressView extends View {
+
     private Paint paint;
-    private int paintColor = Color.BLACK;
+    private int paintColor;
+    private int textColor;
     private int strokesWidth = UIUtils.dp2px(10);
     private int height;
     private int width;
-    private int sweepAngle = 0;
-
-
-    public ProgressView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
+    private int sweepAngles = 0;
 
     public ProgressView(Context context) {
         super(context);
         init();
     }
 
+      /*
+       * 自定义属性 三步
+       * 第一步 创建attrs文件
+       * 第二步 在自定义控件构造器方法中 实例化attrs对象并获取属性名称和默认值
+       * 第三步 在布局文件中使用自定义的属性
+       * */
+
+    public ProgressView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.progressView);
+        int color = typedArray.getColor(R.styleable.progressView_paintColor,Color.BLUE);
+        this.paintColor = color;
+        int tc = typedArray.getColor(R.styleable.progressView_textColor,Color.RED);
+        textColor = tc;
+        //释放资源
+        typedArray.recycle();
+    }
+
     private void init() {
         paint = new Paint();
-        paint.setColor(paintColor);
-        paint.setStrokeWidth(strokesWidth);
         paint.setAntiAlias(true);
         //三种样式
         //stroke 描边
@@ -53,8 +71,8 @@ public class ProgressView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        height = getHeight();
-        width = getWidth();
+        height = getMeasuredHeight();
+        width = getMeasuredWidth();
     }
 
     @Override
@@ -65,7 +83,7 @@ public class ProgressView extends View {
 
         //圆
         paint.setStrokeWidth(strokesWidth);//画笔的宽度
-        paint.setColor(Color.BLUE);//画笔的颜色
+        paint.setColor(paintColor);//画笔的颜色
         int cX = width / 2;//圆心的X坐标
         int cY = height / 2;//圆心的Y坐标
         int radiu = cX - strokesWidth / 2;//圆的半径
@@ -75,12 +93,13 @@ public class ProgressView extends View {
         paint.setColor(Color.RED);
         RectF rectF = new RectF();
         //圆弧的左上定点和右下定点
-        rectF.set(strokesWidth / 2, strokesWidth / 2, width - strokesWidth / 2, height - strokesWidth / 2);
-        canvas.drawArc(rectF, 0, sweepAngle, false, paint);
+        rectF.set(strokeWidth/2,strokeWidth/2,width-strokeWidth/2,height-strokeWidth/2);
+        canvas.drawArc(rectF, 0, sweepAngles, false, paint);
 
         //文字
+        paint.setColor(textColor);
         paint.setStrokeWidth(0); //设置画笔的宽度
-        String str = sweepAngle + "%";
+        String str = sweepAngles + "%";
         paint.setTextSize(30);//设置文字的大小
         Rect rect = new Rect();
         paint.getTextBounds(str, 0, str.length(), rect);//获取文字的宽高
@@ -99,14 +118,14 @@ public class ProgressView extends View {
      * postInvalidate是分线程进行强制重绘
      * */
 
-    public void setSweepAngle(int progress) {
+    public void setSweepAngle(int sweepAngle) {
         ValueAnimator animator = ValueAnimator.ofInt(0, sweepAngle);
-        animator.setDuration(200);
+        animator.setDuration(5000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int a = (int) animation.getAnimatedValue();
-                ProgressView.this.sweepAngle = a;
+                ProgressView.this.sweepAngles = a;
                 invalidate();
             }
         });

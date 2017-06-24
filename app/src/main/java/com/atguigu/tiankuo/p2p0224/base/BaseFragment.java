@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public abstract class BaseFragment extends Fragment {
         }
         View view = View.inflate(getActivity(), getLayoutId(), null);
 
-        ButterKnife.inject(this,view);
+        ButterKnife.inject(this, view);
 
         initView();
         initData();
@@ -44,7 +45,9 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initTitle();
 
-    protected abstract void initListener();
+    public void initListener() {
+
+    }
 
     protected abstract void initData();
 

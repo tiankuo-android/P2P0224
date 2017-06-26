@@ -25,7 +25,7 @@ public class InvestAllFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
 
     }
 

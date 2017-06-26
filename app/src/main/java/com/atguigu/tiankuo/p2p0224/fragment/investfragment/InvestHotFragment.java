@@ -10,7 +10,7 @@ import com.atguigu.tiankuo.p2p0224.base.BaseFragment;
 
 public class InvestHotFragment extends BaseFragment {
     @Override
-    protected void initTitle() {
+    public void initTitle() {
 
     }
 
@@ -20,12 +20,12 @@ public class InvestHotFragment extends BaseFragment {
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
 
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
 
     }
 

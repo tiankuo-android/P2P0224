@@ -36,7 +36,7 @@ public class InvestFragment extends BaseFragment {
     private List<BaseFragment> listFragment;
 
     @Override
-    protected void initTitle() {
+    public void initTitle() {
 
     }
 
@@ -77,7 +77,7 @@ public class InvestFragment extends BaseFragment {
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         initViewPager();
         //设置默认选中的页面
         setSelectTv(tvInvestAll);
@@ -108,7 +108,7 @@ public class InvestFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
 
     }
 

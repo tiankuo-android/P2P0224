@@ -57,7 +57,7 @@ public class HomeFragment extends BaseFragment {
 //    }
 
     @Override
-    protected void initTitle() {
+    public void initTitle() {
 
     }
 

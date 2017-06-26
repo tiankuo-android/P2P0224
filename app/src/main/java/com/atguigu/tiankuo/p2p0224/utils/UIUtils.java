@@ -1,9 +1,12 @@
 package com.atguigu.tiankuo.p2p0224.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 
 import com.atguigu.tiankuo.p2p0224.common.MyApplication;
+
+import java.util.Random;
 
 /**
  * 作者：田阔
@@ -41,4 +44,14 @@ public class UIUtils {
                 float density = getContext().getResources().getDisplayMetrics().density;
                 return (int) (px / density + 0.5);
             }
+
+    public static int getColor(){
+        //产生随机颜色
+        Random random = new Random();
+        int red = random.nextInt(100) + 50;
+        int green = random.nextInt(100) + 50;
+        int blue = random.nextInt(100) + 50;
+
+        return Color.rgb(red, green, blue);
+    }
 }

@@ -1,10 +1,6 @@
 package com.atguigu.tiankuo.p2p0224.fragment.investfragment;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.atguigu.tiankuo.p2p0224.R;
@@ -12,9 +8,6 @@ import com.atguigu.tiankuo.p2p0224.base.BaseFragment;
 import com.atguigu.tiankuo.p2p0224.utils.UIUtils;
 import com.atguigu.tiankuo.p2p0224.view.randomLayout.StellarMap;
 
-import java.util.Random;
-
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
@@ -28,6 +21,10 @@ public class InvestReFragment extends BaseFragment {
     @InjectView(R.id.stellar_map)
     StellarMap stellarMap;
     private String[] datas = new String[]{
+            "新手福利计划", "财神道90天计划", "硅谷钱包计划",
+            "30天理财计划(加息2%)", "180天理财计划(加息5%)", "月月升理财计划(加息10%)",
+            "中情局投资商业经营", "大学老师购买车辆", "屌丝下海经商计划",
+            "大学老师购买车辆", "屌丝下海经商计划",
             "新手福利计划", "财神道90天计划", "硅谷钱包计划",
             "30天理财计划(加息2%)", "180天理财计划(加息5%)", "月月升理财计划(加息10%)",
             "中情局投资商业经营", "大学老师购买车辆", "屌丝下海经商计划",
@@ -65,20 +62,6 @@ public class InvestReFragment extends BaseFragment {
     @Override
     public int getLayoutId() {
         return R.layout.fragment_invest_recommond;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.inject(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
     }
 
     private class MyAdapter implements StellarMap.Adapter {
@@ -130,13 +113,13 @@ public class InvestReFragment extends BaseFragment {
 
             TextView textView = new TextView(getActivity());
             textView.setText(datas[group * 7 + position]);
-            //产生随机颜色
-            Random random = new Random();
-            int red = random.nextInt(100) + 50;
-            int green = random.nextInt(100) + 50;
-            int blue = random.nextInt(100) + 50;
-
-            textView.setTextColor(Color.rgb(red, green, blue));
+//            //产生随机颜色
+//            Random random = new Random();
+//            int red = random.nextInt(100) + 50;
+//            int green = random.nextInt(100) + 50;
+//            int blue = random.nextInt(100) + 50;
+//
+           textView.setTextColor(UIUtils.getColor());
             return textView;
         }
 

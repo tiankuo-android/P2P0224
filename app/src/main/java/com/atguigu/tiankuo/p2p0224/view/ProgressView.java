@@ -14,8 +14,6 @@ import android.view.View;
 import com.atguigu.tiankuo.p2p0224.R;
 import com.atguigu.tiankuo.p2p0224.utils.UIUtils;
 
-import static android.R.attr.strokeWidth;
-
 /**
  * 作者：田阔
  * 邮箱：1226147264@qq.com
@@ -27,10 +25,10 @@ public class ProgressView extends View {
     private Paint paint;
     private int paintColor;
     private int textColor;
-    private int strokesWidth = UIUtils.dp2px(10);
+    private int strokeWidth = UIUtils.dp2px(10);
     private int height;
     private int width;
-    private int sweepAngles = 0;
+    private int sweepAngle = 0;
 
     public ProgressView(Context context) {
         super(context);
@@ -82,24 +80,24 @@ public class ProgressView extends View {
         //圆，圆弧，文字
 
         //圆
-        paint.setStrokeWidth(strokesWidth);//画笔的宽度
+        paint.setStrokeWidth(strokeWidth);//画笔的宽度
         paint.setColor(paintColor);//画笔的颜色
         int cX = width / 2;//圆心的X坐标
         int cY = height / 2;//圆心的Y坐标
-        int radiu = cX - strokesWidth / 2;//圆的半径
+        int radiu = cX - strokeWidth / 2;//圆的半径
         canvas.drawCircle(cX, cY, radiu, paint);//
 
         //圆弧
-        paint.setColor(Color.RED);
+        paint.setColor(Color.YELLOW);
         RectF rectF = new RectF();
         //圆弧的左上定点和右下定点
         rectF.set(strokeWidth/2,strokeWidth/2,width-strokeWidth/2,height-strokeWidth/2);
-        canvas.drawArc(rectF, 0, sweepAngles, false, paint);
+        canvas.drawArc(rectF, 0, sweepAngle, false, paint);
 
         //文字
         paint.setColor(textColor);
         paint.setStrokeWidth(0); //设置画笔的宽度
-        String str = sweepAngles + "%";
+        String str = sweepAngle + "%";
         paint.setTextSize(30);//设置文字的大小
         Rect rect = new Rect();
         paint.getTextBounds(str, 0, str.length(), rect);//获取文字的宽高
@@ -118,14 +116,14 @@ public class ProgressView extends View {
      * postInvalidate是分线程进行强制重绘
      * */
 
-    public void setSweepAngle(int sweepAngle) {
+    public void setSweepAngle(final int sweepAngle) {
         ValueAnimator animator = ValueAnimator.ofInt(0, sweepAngle);
         animator.setDuration(5000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int a = (int) animation.getAnimatedValue();
-                ProgressView.this.sweepAngles = a;
+                ProgressView.this.sweepAngle = a;
                 invalidate();
             }
         });

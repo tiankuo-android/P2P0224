@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.atguigu.tiankuo.p2p0224.acticity.MainActivity">
+    tools:context="com.atguigu.tiankuo.p2p0224.activity.MainActivity">
 
     <FrameLayout
         android:id="@+id/fl_main"
@@ -33,13 +33,13 @@
             android:text="投资" />
 
         <RadioButton
-            android:id="@+id/tb_more"
+            android:id="@+id/tb_propert"
             style="@style/MainButtonStyle"
             android:drawableTop="@drawable/property_icon"
             android:text="我的资产" />
 
         <RadioButton
-            android:id="@+id/tb_propert"
+            android:id="@+id/tb_more"
             style="@style/MainButtonStyle"
             android:drawableTop="@drawable/more_icon"
             android:text="更多" />

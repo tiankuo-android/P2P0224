@@ -8,8 +8,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.atguigu.tiankuo.p2p0224.R;
-import com.atguigu.tiankuo.p2p0224.acticity.IconSettingsActivity;
-import com.atguigu.tiankuo.p2p0224.acticity.MainActivity;
+import com.atguigu.tiankuo.p2p0224.activity.IconSettingsActivity;
+import com.atguigu.tiankuo.p2p0224.activity.MainActivity;
 import com.atguigu.tiankuo.p2p0224.base.BaseFragment;
 import com.atguigu.tiankuo.p2p0224.common.AppNetConfig;
 import com.squareup.picasso.Picasso;

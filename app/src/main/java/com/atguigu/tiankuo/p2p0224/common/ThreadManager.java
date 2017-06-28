@@ -38,7 +38,8 @@ public class ThreadManager {
 
     private ExecutorService executorService = Executors.newCachedThreadPool();
 
-    public ExecutorService getThread(){
+    public ExecutorService getThread() {
         return executorService;
     }
+
 }

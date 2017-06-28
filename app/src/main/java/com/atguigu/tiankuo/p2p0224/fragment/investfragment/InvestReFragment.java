@@ -69,7 +69,7 @@ public class InvestReFragment extends BaseFragment {
         return R.layout.fragment_invest_recommond;
     }
 
-    private class MyAdapter implements StellarMap.Adapter {
+    class MyAdapter implements StellarMap.Adapter {
         /*
           * 有几个组
           * */
@@ -84,7 +84,7 @@ public class InvestReFragment extends BaseFragment {
             int num = datas.length / 7;
 
             if (num % 7 != 0) {
-                num = 1;
+                num += 1;
             }
             return num;
         }

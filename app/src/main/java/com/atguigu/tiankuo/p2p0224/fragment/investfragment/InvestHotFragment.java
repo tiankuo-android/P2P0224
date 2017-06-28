@@ -33,6 +33,11 @@ public class InvestHotFragment extends BaseFragment {
     };
 
     @Override
+    public String getChildUrl() {
+        return null;
+    }
+
+    @Override
     public void initTitle() {
 
     }
@@ -49,7 +54,7 @@ public class InvestHotFragment extends BaseFragment {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
                 TextView textView = new TextView(getActivity());
-                textView.setTextSize(20);
+                textView.setTextSize(15);
                 textView.setTextColor(Color.WHITE);
                 //获取shape布局的实例对象
                 Drawable drawable = getResources().getDrawable(R.drawable.hot_shape);

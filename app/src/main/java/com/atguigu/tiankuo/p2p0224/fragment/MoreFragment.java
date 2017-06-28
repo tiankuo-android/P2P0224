@@ -11,6 +11,11 @@ import com.atguigu.tiankuo.p2p0224.base.BaseFragment;
 public class MoreFragment extends BaseFragment {
 
     @Override
+    public String getChildUrl() {
+        return "";
+    }
+
+    @Override
     public void initTitle() {
 
     }

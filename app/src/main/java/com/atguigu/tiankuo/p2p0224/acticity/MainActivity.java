@@ -1,8 +1,7 @@
 package com.atguigu.tiankuo.p2p0224.acticity;
 
-import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -10,19 +9,19 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.atguigu.tiankuo.p2p0224.R;
+import com.atguigu.tiankuo.p2p0224.base.BaseActivity;
 import com.atguigu.tiankuo.p2p0224.common.AppManager;
 import com.atguigu.tiankuo.p2p0224.fragment.HomeFragment;
-import com.atguigu.tiankuo.p2p0224.fragment.investfragment.InvestFragment;
 import com.atguigu.tiankuo.p2p0224.fragment.MoreFragment;
-import com.atguigu.tiankuo.p2p0224.fragment.PropertyFragment;
+import com.atguigu.tiankuo.p2p0224.fragment.propertyfragment.PropertyFragment;
+import com.atguigu.tiankuo.p2p0224.fragment.investfragment.InvestFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
 
     @InjectView(R.id.fl_main)
@@ -38,26 +37,10 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.rg_main)
     RadioGroup rgMain;
 
-    private boolean isExit = false;
     private HomeFragment homeFragment;
-    private MoreFragment moreFragment;
     private InvestFragment investFragment;
+    private MoreFragment moreFragment;
     private PropertyFragment propertyFragment;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
-
-        AppManager.getInstance().addActivity(this);
-        //初始化控件
-        initData();
-        //初始化数据
-        initView();
-        //事件监听
-        initListener();
-    }
 
     @Override
     protected void onDestroy() {
@@ -65,46 +48,53 @@ public class MainActivity extends AppCompatActivity {
         AppManager.getInstance().removeActivity(this);
     }
 
-    private void initListener() {
-        //radioGroup的监听
+    @Override
+    public void initListener() {
+        //radioGroup监听
         rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group,int checkedId) {
-                switchFragment(checkedId);
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+
+                switchFrgment(checkedId);
             }
         });
     }
-    //切换Fragment
-    public void switchFragment(int checkedId) {
+
+    /*
+   * 切换fragment
+   *
+   * */
+    public void switchFrgment(int checkedId){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hidden(transaction);
-        switch (checkedId) {
-            case R.id.tb_home :
-                if(homeFragment == null) {
+
+        switch (checkedId){
+            case R.id.tb_invest:
+                if (investFragment == null){
+                    investFragment = new InvestFragment();
+                    transaction.add(R.id.fl_main,investFragment);
+                }else{
+                    transaction.show(investFragment);
+                }
+                break;
+            case R.id.rg_main:
+                if (homeFragment == null){
                     homeFragment = new HomeFragment();
                     transaction.add(R.id.fl_main,homeFragment);
                 }else{
                     transaction.show(homeFragment);
                 }
                 break;
-            case R.id.tb_invest :
-                if(investFragment == null) {
-                    investFragment = new InvestFragment();
-                    transaction.add(R.id.fl_main,investFragment);
-                }else{
-                 transaction.show(investFragment);
-                }
-                break;
-            case R.id.tb_more :
-                if(moreFragment == null) {
+            case R.id.tb_more:
+                if (moreFragment == null){
                     moreFragment = new MoreFragment();
                     transaction.add(R.id.fl_main,moreFragment);
                 }else{
-                 transaction.show(moreFragment);
+                    transaction.show(moreFragment);
                 }
                 break;
-            case R.id.tb_propert :
-                if(propertyFragment == null) {
+            case R.id.tb_propert:
+                if (propertyFragment == null){
                     propertyFragment = new PropertyFragment();
                     transaction.add(R.id.fl_main,propertyFragment);
                 }else{
@@ -116,45 +106,55 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hidden(FragmentTransaction transaction) {
-        if(homeFragment != null) {
-            transaction.hide(homeFragment);
-        }
-        if(investFragment != null) {
+        if (investFragment != null){
             transaction.hide(investFragment);
         }
-        if(moreFragment != null) {
+        if (moreFragment != null){
             transaction.hide(moreFragment);
         }
-        if(propertyFragment != null) {
+        if (homeFragment != null){
+            transaction.hide(homeFragment);
+        }
+        if (propertyFragment != null){
             transaction.hide(propertyFragment);
         }
     }
 
-    private void initView() {
-        switchFragment(R.id.tb_home);
-
-    }
-
-    private void initData() {
+    @Override
+    public void initData() {
 
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(isExit) {
+    public void initView() {
+        switchFrgment(R.id.rg_main);
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
+    /*
+   * 双击退出
+   * */
+    private boolean isExit = false;
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+
+            if (isExit){
                 finish();
             }
-            Toast.makeText(MainActivity.this, "点击两下退出", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "臭不要脸不要摸我", Toast.LENGTH_SHORT).show();
             isExit = true;
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                  isExit = false;
+                    isExit = false;
                 }
             },2000);
             return true;
         }
-        return super.onKeyDown(keyCode, event);
+        return super.onKeyUp(keyCode,event);
     }
 }

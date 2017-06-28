@@ -2,11 +2,15 @@ package com.atguigu.tiankuo.p2p0224.utils;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.View;
 
 import com.atguigu.tiankuo.p2p0224.common.MyApplication;
 
 import java.util.Random;
+
 
 /**
  * 作者：田阔
@@ -15,15 +19,15 @@ import java.util.Random;
  */
 
 public class UIUtils {
-
+    //加载布局
     public static View inflate(int id) {
         return View.inflate(getContext(), id, null);
     }
-
-    private static Context getContext() {
+    //返回一个上下文
+    public static Context getContext() {
         return MyApplication.getContext();
     }
-
+    //格式化字符串 -占位符
     public static String stringFormat(int id, String value) {
         String versionName = String.format(getString(id), value);
         return versionName;
@@ -53,5 +57,30 @@ public class UIUtils {
         int blue = random.nextInt(100) + 50;
 
         return Color.rgb(red, green, blue);
+    }
+
+    public static void runOnUIThread(Runnable runnable) {
+        //pid processid 进程id
+        //tid threadid 线程id
+        //注意：如果在主线程中运行 那么tid == pid
+        Log.d("process", "runOnUIThread: "
+                +"processid=="+MyApplication.getPid()
+                +"  threadid== "+android.os.Process.myTid()
+        );
+        if(MyApplication.getPid() == android.os.Process.myTid()){
+            runnable.run();
+        }else{
+            MyApplication.getHandler().post(runnable);
+        }
+    }
+
+    //用代码生成drawable
+    public static Drawable getDrawable(){
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(Color.BLUE);
+        drawable.setCornerRadius(20);
+        drawable.setStroke(2,Color.RED);
+        drawable.setGradientType(GradientDrawable.RECTANGLE);
+        return drawable;
     }
 }

@@ -48,6 +48,22 @@
         </activity>
         <activity android:name=".acticity.MainActivity" />
         <activity android:name=".acticity.LoginActivity"></activity>
+        <activity android:name=".acticity.RegisterActivity" />
+        <activity android:name=".acticity.IconSettingsActivity" />
+        <activity android:name=".fragment.propertyfragment.WidthDrawActivity" />
+
+        <!-- alipay sdk begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- alipay sdk end -->
+        <activity android:name=".fragment.propertyfragment.WidthDrawActivity" />
+        <activity android:name=".fragment.propertyfragment.TouZiActivity" />
+        <activity android:name=".fragment.propertyfragment.TouZiZhiGuanActivity" />
+        <activity android:name=".fragment.propertyfragment.ZiChanActivity"></activity>
     </application>
 
 </manifest>

@@ -36,6 +36,11 @@ public class InvestFragment extends BaseFragment {
     private List<BaseFragment> listFragment;
 
     @Override
+    public String getChildUrl() {
+        return "";
+    }
+
+    @Override
     public void initTitle() {
 
     }

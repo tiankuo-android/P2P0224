@@ -1,5 +1,6 @@
 package com.atguigu.tiankuo.p2p0224.activity;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -9,12 +10,13 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.atguigu.tiankuo.p2p0224.R;
+import com.atguigu.tiankuo.p2p0224.activity.gesture.GestureVerifyActivity;
 import com.atguigu.tiankuo.p2p0224.base.BaseActivity;
 import com.atguigu.tiankuo.p2p0224.common.AppManager;
 import com.atguigu.tiankuo.p2p0224.fragment.HomeFragment;
 import com.atguigu.tiankuo.p2p0224.fragment.MoreFragment;
-import com.atguigu.tiankuo.p2p0224.fragment.propertyfragment.PropertyFragment;
 import com.atguigu.tiankuo.p2p0224.fragment.investfragment.InvestFragment;
+import com.atguigu.tiankuo.p2p0224.fragment.propertyfragment.PropertyFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,19 +26,18 @@ import butterknife.InjectView;
 public class MainActivity extends BaseActivity {
 
 
-    @InjectView(R.id.fl_main)
-    FrameLayout flMain;
-    @InjectView(R.id.tb_home)
-    RadioButton tbHome;
-    @InjectView(R.id.tb_invest)
-    RadioButton tbInvest;
-    @InjectView(R.id.tb_more)
-    RadioButton tbMore;
-    @InjectView(R.id.tb_propert)
-    RadioButton tbPropert;
-    @InjectView(R.id.rg_main)
-    RadioGroup rgMain;
-
+    @InjectView(R.id.main_fl)
+    FrameLayout mainFl;
+    @InjectView(R.id.rb_main)
+    RadioButton rbMain;
+    @InjectView(R.id.rb_invest)
+    RadioButton rbInvest;
+    @InjectView(R.id.rb_propert)
+    RadioButton rbPropert;
+    @InjectView(R.id.rb_more)
+    RadioButton rbMore;
+    @InjectView(R.id.main_rg)
+    RadioGroup mainRg;
     private HomeFragment homeFragment;
     private InvestFragment investFragment;
     private MoreFragment moreFragment;
@@ -48,10 +49,10 @@ public class MainActivity extends BaseActivity {
         AppManager.getInstance().removeActivity(this);
     }
 
-    @Override
+
     public void initListener() {
         //radioGroup监听
-        rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mainRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
@@ -64,40 +65,40 @@ public class MainActivity extends BaseActivity {
    * 切换fragment
    *
    * */
-    public void switchFrgment(int checkedId){
+    public void switchFrgment(int checkedId) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hidden(transaction);
 
-        switch (checkedId){
-            case R.id.tb_invest:
-                if (investFragment == null){
+        switch (checkedId) {
+            case R.id.rb_invest:
+                if (investFragment == null) {
                     investFragment = new InvestFragment();
-                    transaction.add(R.id.fl_main,investFragment);
-                }else{
+                    transaction.add(R.id.main_fl, investFragment);
+                } else {
                     transaction.show(investFragment);
                 }
                 break;
-            case R.id.rg_main:
-                if (homeFragment == null){
+            case R.id.rb_main:
+                if (homeFragment == null) {
                     homeFragment = new HomeFragment();
-                    transaction.add(R.id.fl_main,homeFragment);
-                }else{
+                    transaction.add(R.id.main_fl, homeFragment);
+                } else {
                     transaction.show(homeFragment);
                 }
                 break;
-            case R.id.tb_propert:
-                if (propertyFragment == null){
+            case R.id.rb_propert:
+                if (propertyFragment == null) {
                     propertyFragment = new PropertyFragment();
-                    transaction.add(R.id.fl_main,propertyFragment);
-                }else{
+                    transaction.add(R.id.main_fl, propertyFragment);
+                } else {
                     transaction.show(propertyFragment);
                 }
                 break;
-            case R.id.tb_more:
-                if (moreFragment == null){
+            case R.id.rb_more:
+                if (moreFragment == null) {
                     moreFragment = new MoreFragment();
-                    transaction.add(R.id.fl_main,moreFragment);
-                }else{
+                    transaction.add(R.id.main_fl, moreFragment);
+                } else {
                     transaction.show(moreFragment);
                 }
                 break;
@@ -106,55 +107,61 @@ public class MainActivity extends BaseActivity {
     }
 
     private void hidden(FragmentTransaction transaction) {
-        if (investFragment != null){
+        if (investFragment != null) {
             transaction.hide(investFragment);
         }
-        if (moreFragment != null){
+        if (moreFragment != null) {
             transaction.hide(moreFragment);
         }
-        if (homeFragment != null){
+        if (homeFragment != null) {
             transaction.hide(homeFragment);
         }
-        if (propertyFragment != null){
+        if (propertyFragment != null) {
             transaction.hide(propertyFragment);
         }
     }
 
-    @Override
-    public void initData() {
 
+    public void initData() {
+        //验证手势密码是否开启
+        boolean toggle = get("toggle");
+        if (toggle) {
+            startActivity(new Intent(this, GestureVerifyActivity.class));
+        }
     }
 
-    @Override
+
     public void initView() {
-        switchFrgment(R.id.rg_main);
+        switchFrgment(R.id.rb_main);
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
     }
+
     /*
    * 双击退出
    * */
     private boolean isExit = false;
+
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-            if (isExit){
+            if (isExit) {
                 finish();
             }
-            Toast.makeText(this, "臭不要脸不要摸我", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "滚", Toast.LENGTH_SHORT).show();
             isExit = true;
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     isExit = false;
                 }
-            },2000);
+            }, 2000);
             return true;
         }
-        return super.onKeyUp(keyCode,event);
+        return super.onKeyUp(keyCode, event);
     }
 }

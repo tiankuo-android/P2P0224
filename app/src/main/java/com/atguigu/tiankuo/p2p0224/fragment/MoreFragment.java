@@ -70,7 +70,7 @@ public class MoreFragment extends BaseFragment {
 
     @Override
     public void initTitle() {
-
+        baseTitle.setText("设置");
     }
 
     @Override

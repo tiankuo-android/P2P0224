@@ -84,7 +84,7 @@ public class ProgressView extends View {
         paint.setColor(paintColor);//画笔的颜色
         int cX = width / 2;//圆心的X坐标
         int cY = height / 2;//圆心的Y坐标
-        int radiu = cX - strokeWidth / 2;//圆的半径
+        int radiu = cX - strokeWidth / 2;//圆.的半径
         canvas.drawCircle(cX, cY, radiu, paint);//
 
         //圆弧
